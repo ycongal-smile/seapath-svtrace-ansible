@@ -8,19 +8,19 @@ all:
             children:
                 subscriber:
                     hosts:
-                        vm_name: # Change as desired
-                            ansible_host:
-                            ansible_user:
+                        10.0.0.3: # Change as desired
+                            ansible_host: 10.0.0.3
+                            ansible_user: root
                             ansible_python_interpreter: /usr/bin/python3
                             ansible_connection: ssh
                             ansible_ssh_private_key_file:
                             ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
                             ansible_remote_tmp: /tmp/.ansible/tmp
 
-                            sv_interface: # SV reception interface
-
-                            sv_ts_core:  # sv_timestamp_logger CPU core
-                            ptp_manual_configuration: # Remove this var to disable ptp configuration
+                            sv_interface: enp0s2 # SV reception interface
+                                          # altname does not work
+                            sv_ts_core: 1 # sv_timestamp_logger CPU core
+                            #ptp_manual_configuration: # Remove this var to disable ptp configuration
                             enable_svtrace: # Enable svtrace tracing
                             svtrace_core: # Core to run svtrace (should be isolated)
                             enable_sv_ts: true # Enable sv_timestamp_logger

@@ -4,18 +4,18 @@
 ---
 all:
     vars:
-      first_SV: # First SV counter defined in PCAP file
-      stream_to_log: # Desired SV stream to record. If not set, all streams are logged.
+      first_SV: 280 # First SV counter defined in PCAP file
+      stream_to_log: 4001 # Desired SV stream to record. If not set, all streams are logged.
       svtrace_venv_path: /tmp/svtrace_venv/
     children:
         standalone_machine:
             children:
                 hypervisors:
                     hosts:
-                        hypervisor_name: # Change as desired
+                        10.0.0.2: # Change as desired
                             # Ansible variables
-                            ansible_host:
-                            ansible_user:
+                            ansible_host: 10.0.0.2
+                            ansible_user: root # capture interfaces, FIFO sched, ...
                             ansible_python_interpreter: /usr/bin/python3
                             ansible_connection: ssh
                             ansible_ssh_private_key_file:
@@ -23,20 +23,20 @@ all:
                             ansible_remote_tmp: /tmp/.ansible/tmp
 
                             # Main network configuration
-                            network_interface:
+                            network_interface: prpint
 
-                            sv_interface:  # SV reception interface
-                            sv_ts_core: # sv_timestamp_logger CPU core
-                            enable_svtrace: # Enable svtrace tracing
-                            svtrace_core: # Core to run svtrace (should be isolated)
-                            enable_sv_ts: # Enable sv_timestamp_logger
+                            sv_interface: enp24s0 # SV reception interface
+                            sv_ts_core: 1 # sv_timestamp_logger CPU core
+                            enable_svtrace: true # Enable svtrace tracing
+                            svtrace_core: 2 # Core to run svtrace (should be isolated)
+                            enable_sv_ts: true # Enable sv_timestamp_logger
 
                 publisher:
                     hosts:
-                        publisher_name: # Change as desired
+                        10.0.0.1: # Change as desired
                             # Ansible variables
-                            ansible_host:
-                            ansible_user:
+                            ansible_host: 10.0.0.1
+                            ansible_user: root # root (FIFO sched)
                             ansible_python_interpreter: /usr/bin/python3
                             ansible_connection: ssh
                             ansible_ssh_private_key_file:
@@ -52,11 +52,11 @@ all:
                             phc_core: # phc2sys CPU core
                             ptp_device: # PTP device synchronized by ptp4l
 
-                            sv_interface: # SV transmission interface
+                            sv_interface: prp # SV transmission interface
 
-                            pcap_file: # PCAP file to be used (absolute path)
+                            pcap_file: /home/virtu/yoann/SV_Normal_Traffic.pcap # PCAP file to be used (absolute path)
                             pcap_cycles: 10 # Number of PCAP loops to repeat
-                            sv_ts_core: # sv_timestamp_logger CPU core
-                            enable_sv_ts: # Enable sv_timestamp_logger
-                            bittwist_core: # bittwist CPU core
-                            ptp_manual_configuration: # Set to false to disable ptp configuration
+                            sv_ts_core: 2 # sv_timestamp_logger CPU core
+                            enable_sv_ts: true # Enable sv_timestamp_logger
+                            bittwist_core: 1 # bittwist CPU core
+                            ptp_manual_configuration: false # Set to false to disable ptp configuration
