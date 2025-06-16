@@ -3,5 +3,6 @@
 ---
 - name: Clone sv-timestamp-analysis
   git:
-    repo: https://github.com/seapath/sv-timestamp-analysis
+    repo: https://github.com/ycongal-smile/sv-timestamp-analysis.git
+    version: yco/stream_index_id
     dest: ../sv-timestamp-analysis
