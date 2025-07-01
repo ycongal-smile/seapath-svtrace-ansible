@@ -10,5 +10,5 @@
 - name: Send svtrace configuration file
   template:
       src: svtrace.cfg.j2
-      dest: /etc/svtrace.cfg
+      dest: /tmp/svtrace.cfg
   when: enable_svtrace is defined and enable_svtrace|bool == true
